@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyUp.Model.Models
@@ -7,6 +9,7 @@ namespace MyUp.Model.Models
     public class Tag
     {
         [Key]
+        [Column(TypeName = "varchar")]
         [MaxLength(50)]
         public string Id { set; get; }
 
@@ -17,5 +20,8 @@ namespace MyUp.Model.Models
         [MaxLength(50)]
         [Required]
         public string Type { set; get; }
+
+     
+
     }
 }

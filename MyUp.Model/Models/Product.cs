@@ -1,7 +1,6 @@
 ﻿using MyUp.Model.Abstract;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Xml.Linq;
 
 namespace MyUp.Model.Models
 {
@@ -26,7 +25,9 @@ namespace MyUp.Model.Models
         [MaxLength(256)]
         public string Image { set; get; }
 
-        public XElement MoreImage { set; get; }
+        [Column(TypeName = "Xml")]
+        public string MoreImage { set; get; }
+
         public decimal Price { set; get; }
         public decimal? Promotion { set; get; }
         public int? Warranty { set; get; }

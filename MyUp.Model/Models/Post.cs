@@ -1,4 +1,6 @@
-﻿using MyUp.Model.Abstract;
+﻿using System.Collections;
+using System.Collections.Generic;
+using MyUp.Model.Abstract;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -36,5 +38,7 @@ namespace MyUp.Model.Models
 
         [ForeignKey("CategoryId")]
         public virtual PostCategory PostCategory { set; get; }
+
+        public virtual IEnumerable<PostTag> PostTags { set; get; }
     }
 }

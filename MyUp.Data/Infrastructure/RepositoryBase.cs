@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace MyUp.Data.Infrastructure
 {
-    public abstract class RepositoryBase<T> where T : class
+    public abstract class RepositoryBase<T> : IRepository<T> where T : class
     {
         #region Properties
 
@@ -18,14 +18,14 @@ namespace MyUp.Data.Infrastructure
             get;
         }
 
-        private EntitiesDbContext DbContext => _entitiesDbContext ?? (_entitiesDbContext = DbFactory.Init());
+        protected EntitiesDbContext EntitiesContext => _entitiesDbContext ?? (_entitiesDbContext = DbFactory.Init());
 
         #endregion Properties
 
         protected RepositoryBase(IDbFactory dbFactory)
         {
             DbFactory = dbFactory;
-            _dbSet = DbContext.Set<T>();
+            _dbSet = EntitiesContext.Set<T>();
         }
 
         #region Implementation
@@ -68,7 +68,7 @@ namespace MyUp.Data.Infrastructure
             return _dbSet.Count(where);
         }
 
-        private IQueryable<T> GetAll(string[] includes = null)
+        public IQueryable<T> GetAll(string[] includes = null)
         {
             //HANDLE INCLUDES FOR ASSOCIATED OBJECTS IF APPLICABLE
             if (includes == null || !includes.Any()) return _entitiesDbContext.Set<T>().AsQueryable();

@@ -4,15 +4,13 @@ using System.Linq.Expressions;
 
 namespace MyUp.Data.Infrastructure
 {
-    public interface IEntityRepository<T> where T : class
+    public interface IRepository<T> where T : class
     {
         void Add(T entity);
 
-        void Edit(T entity);
+        void Update(T entity);
 
         void Delete(T entity);
-
-        void Save();
 
         void DeleteMulti(Expression<Func<T, bool>> where);
 
