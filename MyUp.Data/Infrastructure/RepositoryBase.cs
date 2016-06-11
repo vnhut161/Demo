@@ -46,6 +46,12 @@ namespace MyUp.Data.Infrastructure
             _dbSet.Remove(entity);
         }
 
+        public void DeleteById(int id)
+        {
+            var result = _dbSet.Find(id);
+            _dbSet.Remove(result);
+        }
+
         public virtual void DeleteMulti(Expression<Func<T, bool>> where)
         {
             var objects = _dbSet.Where(where).AsEnumerable();

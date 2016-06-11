@@ -3,7 +3,7 @@ using MyUp.Model.Models;
 
 namespace MyUp.Data.Repositories
 {
-    public interface IProductRepository
+    public interface IProductRepository : IRepository<Product>
     {
     }
 

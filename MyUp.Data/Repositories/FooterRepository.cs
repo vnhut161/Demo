@@ -3,11 +3,11 @@ using MyUp.Model.Models;
 
 namespace MyUp.Data.Repositories
 {
-    public interface IFooterRepository
+    public interface IFooterRepository:IRepository<Footer>
     {
     }
 
-    public class FooterRepository : RepositoryBase<Product>, IFooterRepository
+    public class FooterRepository : RepositoryBase<Footer>, IFooterRepository
     {
         public FooterRepository(IDbFactory dbFactory) : base(dbFactory)
         {

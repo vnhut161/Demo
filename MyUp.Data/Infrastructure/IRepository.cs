@@ -12,6 +12,8 @@ namespace MyUp.Data.Infrastructure
 
         void Delete(T entity);
 
+        void DeleteById(int id);
+
         void DeleteMulti(Expression<Func<T, bool>> where);
 
         T GetSingleById(int id);

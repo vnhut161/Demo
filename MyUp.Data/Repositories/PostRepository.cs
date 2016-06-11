@@ -3,11 +3,11 @@ using MyUp.Model.Models;
 
 namespace MyUp.Data.Repositories
 {
-    public interface IPostRepository
+    public interface IPostRepository : IRepository<Post>
     {
     }
 
-    public class PostRepository : RepositoryBase<Product>, IPostRepository
+    public class PostRepository : RepositoryBase<Post>, IPostRepository
     {
         public PostRepository(IDbFactory dbFactory) : base(dbFactory)
         {

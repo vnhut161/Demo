@@ -1,6 +1,5 @@
-﻿using System.Collections;
+﻿using MyUp.Model.Abstract;
 using System.Collections.Generic;
-using MyUp.Model.Abstract;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

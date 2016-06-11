@@ -3,11 +3,11 @@ using MyUp.Model.Models;
 
 namespace MyUp.Data.Repositories
 {
-    public interface ITagRepository
+    public interface ITagRepository : IRepository<Tag>
     {
     }
 
-    public class TagRepository : RepositoryBase<Product>, ITagRepository
+    public class TagRepository : RepositoryBase<Tag>, ITagRepository
     {
         public TagRepository(IDbFactory dbFactory) : base(dbFactory)
         {

@@ -3,11 +3,11 @@ using MyUp.Model.Models;
 
 namespace MyUp.Data.Repositories
 {
-    public interface IOrderDetailRepository
+    public interface IOrderDetailRepository : IRepository<OrderDetail>
     {
     }
 
-    public class OrderDetailRepository : RepositoryBase<Product>, IOrderDetailRepository
+    public class OrderDetailRepository : RepositoryBase<OrderDetail>, IOrderDetailRepository
     {
         public OrderDetailRepository(IDbFactory dbFactory) : base(dbFactory)
         {
