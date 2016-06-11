@@ -1,12 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyUp.Model.Models
 {
     [Table("OrderDetails")]
     public class OrderDetail
     {
+        [Key]
+        [Column(Order = 1)]
         public int OrderId { set; get; }
+
+        [Key]
+        [Column(Order = 2)]
         public int ProductId { set; get; }
+
         public int Quantity { set; get; }
 
         [ForeignKey("OrderId")]
