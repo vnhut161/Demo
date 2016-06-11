@@ -17,11 +17,13 @@ namespace MyUp.Service
 
         IEnumerable<Post> GetAllPosts();
 
-        IEnumerable<Post> GetAllPaging(int page, int pagesize, out int totalRow);
-
         Post GetPostById(int id);
 
-        IEnumerable<Post> GetAllByTagPaging(int page, int pagesize, out int totalRow);
+        IEnumerable<Post> GetAllPaging(int page, int pagesize, out int totalRow);
+
+        IEnumerable<Post> GetAllByTagPaging(string tag, int page, int pagesize, out int totalRow);
+
+        IEnumerable<Post> GetAllByCategoryPaging(int category, int page, int pagesize, out int totalRow);
     }
 
     public class PostService : IPostService
@@ -60,20 +62,25 @@ namespace MyUp.Service
             return _postRepository.GetAll(new[] { "PostCategory" });
         }
 
-        public IEnumerable<Post> GetAllPaging(int page, int pagesize, out int totalRow)
-        {
-            return _postRepository.GetMultiPaging(x => x.Status, out totalRow, page, pagesize);
-        }
-
         public Post GetPostById(int id)
         {
             return _postRepository.GetSingleById(id);
         }
 
-        public IEnumerable<Post> GetAllByTagPaging(int page, int pagesize, out int totalRow)
+        public IEnumerable<Post> GetAllPaging(int page, int pagesize, out int totalRow)
         {
-            //TODO: select  all post by tag
             return _postRepository.GetMultiPaging(x => x.Status, out totalRow, page, pagesize);
+        }
+
+        public IEnumerable<Post> GetAllByTagPaging(string tag, int page, int pagesize, out int totalRow)
+        {
+            return _postRepository.GetAllPostsByTag(tag, page, pagesize, out totalRow);
+        }
+
+        public IEnumerable<Post> GetAllByCategoryPaging(int category, int page, int pagesize, out int totalRow)
+        {
+            return _postRepository.GetMultiPaging(x => x.Status && x.CategoryId == category, out totalRow, page,
+                pagesize, new[] { "PostCategory" });
         }
     }
 }
