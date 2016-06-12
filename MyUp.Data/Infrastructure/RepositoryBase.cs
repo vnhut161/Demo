@@ -30,9 +30,9 @@ namespace MyUp.Data.Infrastructure
 
         #region Implementation
 
-        public virtual void Add(T entity)
+        public virtual T Add(T entity)
         {
-            _dbSet.Add(entity);
+            return _dbSet.Add(entity);
         }
 
         public virtual void Update(T entity)
@@ -41,15 +41,15 @@ namespace MyUp.Data.Infrastructure
             _entitiesDbContext.Entry(entity).State = EntityState.Modified;
         }
 
-        public virtual void Delete(T entity)
+        public virtual T Delete(T entity)
         {
-            _dbSet.Remove(entity);
+            return _dbSet.Remove(entity);
         }
 
-        public void DeleteById(int id)
+        public T DeleteById(int id)
         {
             var result = _dbSet.Find(id);
-            _dbSet.Remove(result);
+            return _dbSet.Remove(result);
         }
 
         public virtual void DeleteMulti(Expression<Func<T, bool>> where)
@@ -74,7 +74,7 @@ namespace MyUp.Data.Infrastructure
             return _dbSet.Count(where);
         }
 
-        public IQueryable<T> GetAll(string[] includes = null)
+        public IEnumerable<T> GetAll(string[] includes = null)
         {
             //HANDLE INCLUDES FOR ASSOCIATED OBJECTS IF APPLICABLE
             if (includes == null || !includes.Any()) return _entitiesDbContext.Set<T>().AsQueryable();
@@ -85,10 +85,14 @@ namespace MyUp.Data.Infrastructure
 
         public T GetSingleByCondition(Expression<Func<T, bool>> expression, string[] includes = null)
         {
-            return GetAll(includes).FirstOrDefault(expression);
+            if (includes == null || !includes.Any()) return _entitiesDbContext.Set<T>().FirstOrDefault(expression);
+            var result = _entitiesDbContext.Set<T>().Include(includes.First());
+            result = includes.Skip(1).Aggregate(result, (current, source) => current.Include(source));
+
+            return result.FirstOrDefault(expression);
         }
 
-        public virtual IQueryable<T> GetMulti(Expression<Func<T, bool>> predicate, string[] includes = null)
+        public virtual IEnumerable<T> GetMulti(Expression<Func<T, bool>> predicate, string[] includes = null)
         {
             //HANDLE INCLUDES FOR ASSOCIATED OBJECTS IF APPLICABLE
             if (includes == null || !includes.Any())
@@ -98,7 +102,7 @@ namespace MyUp.Data.Infrastructure
             return query.Where(predicate).AsQueryable();
         }
 
-        public virtual IQueryable<T> GetMultiPaging(Expression<Func<T, bool>> predicate, out int total, int index = 0,
+        public virtual IEnumerable<T> GetMultiPaging(Expression<Func<T, bool>> predicate, out int total, int index = 0,
             int size = 20, string[] includes = null)
         {
             var skipCount = index * size;

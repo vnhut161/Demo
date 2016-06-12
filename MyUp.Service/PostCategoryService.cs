@@ -7,11 +7,11 @@ namespace MyUp.Service
 {
     public interface IPostCategoryService
     {
-        void Add(PostCategory postCategory);
+        PostCategory Add(PostCategory postCategory);
 
         void Update(PostCategory postCategory);
 
-        void DeleteById(int id);
+        PostCategory DeleteById(int id);
 
         void SaveChanges();
 
@@ -33,9 +33,9 @@ namespace MyUp.Service
             _unitOfWork = unitOfWork;
         }
 
-        public void Add(PostCategory postCategory)
+        public PostCategory Add(PostCategory postCategory)
         {
-            _postCategoryRepository.Add(postCategory);
+            return _postCategoryRepository.Add(postCategory);
         }
 
         public void Update(PostCategory postCategory)
@@ -43,9 +43,9 @@ namespace MyUp.Service
             _postCategoryRepository.Update(postCategory);
         }
 
-        public void DeleteById(int id)
+        public PostCategory DeleteById(int id)
         {
-            _postCategoryRepository.DeleteById(id);
+            return _postCategoryRepository.DeleteById(id);
         }
 
         public void SaveChanges()
